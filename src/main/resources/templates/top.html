@@ -48,6 +48,22 @@
             <div class="status-title">ステータス</div>
             <div class="limit-date-title">タスク期限</div>
         </div>
+        <div class="task-icon" th:each="task : ${tasks}">
+            <div class="content">
+                <pre><span th:text="${task.content}"/></pre>
+            </div>
+            <div class="status">
+                <form th:action="@{/update-Status/{id}(id=${task.id})}" th:method="put">
+                    <select name="status">
+                        <option value="1" th:selected="${task.status == 1}">未着手</option>
+                        <option value="2" th:selected="${task.status == 2}">実行中</option>
+                        <option value="3" th:selected="${task.status == 3}">ステイ中</option>
+                        <option value="4" th:selected="${task.status == 4}">完了</option>
+                    </select>
+                    <input class="update-states-button" type="submit" value="変更">
+                </form>
+            </div>
+        </div>
     </div>
 </div>
 </body>

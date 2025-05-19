@@ -51,4 +51,19 @@ public class TasksController {
         // rootへリダイレクト
         return new ModelAndView("redirect:/");
     }
+
+    /*
+     * タスク追加画面表示処理
+     */
+    @GetMapping("/new")
+    public ModelAndView newTask(){
+        ModelAndView mav = new ModelAndView();
+        // form用の空のentityを準備
+        TasksForm taskForm = new TasksForm();
+        // 画面遷移先を指定
+        mav.setViewName("/new");
+        // 準備した空のFormを保管
+        mav.addObject("tasksForm", taskForm);
+        return mav;
+    }
 }
