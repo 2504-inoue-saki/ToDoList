@@ -1,0 +1,86 @@
+body {
+	background-color: white;
+}
+
+.header-contents {
+	margin-left: 20px;
+}
+
+.main-contents {
+	margin: 20px;
+	padding: 10px 10px 5px 10px;
+	height: 100%;
+	width: 80%;
+}
+
+.errorMessages {
+	margin-top: 10px;
+	margin-right: 10px;
+	margin-bottom: 10px;
+	margin-left: 40px;
+	color: red;
+}
+
+.new-button {
+	margin-left: 40px;
+}
+
+.today-date {
+	margin-left: 40px;
+}
+
+.filter {
+}
+
+.tasks {
+}
+
+.titles {
+    margin-left: 40px;
+    display: flex;
+}
+
+.content-title {
+    width: 200px;
+}
+
+.status-title {
+    width: 150px;
+}
+
+.limit-date-title {
+ }
+
+.task-icon {
+    margin-bottom: 5px;
+    margin-left: 40px;
+    display: flex;
+}
+
+.task-icon .content {
+    width: 200px;
+}
+
+.task-icon .content pre {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
+.task-icon .status {
+    width: 150px;
+}
+
+.update-states-button {
+    margin-left: 10px;
+}
+
+.task-icon .limit-date {
+}
+
+.task-icon .edit-button {
+    margin-left: 10px;
+}
+
+.task-icon .delete-button {
+    margin-left: 10px;
+}

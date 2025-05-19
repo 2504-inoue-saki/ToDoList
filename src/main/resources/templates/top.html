@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <link th:href="@{/css/style.css}" rel="styleSheet">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script th:src="@{/js/delete.js}"></script>
+    <script th:src="@{/js/updateStatus.js}"></script>
+    <title>TOP</title>
+</head>
+<body>
+<div class="header-contents">
+    <h1>ToDo</h1>
+</div>
+<div class="main-contents">
+    <div class="errorMessages" th:each="errorMessage : ${errorMessages}">
+        <span th:text="${errorMessage}"></span>
+    </div>
+    <div class="today-date">
+        本日の日付 : <span th:text="${#temporals.format(now, 'yyyy/MM/dd')}"/>
+    </div>
+    <br/>
+    <a href="/new">
+        <button class="new-button" type="button">新規タスク</button>
+    </a>
+    <div class="filter">
+        <form method="get">
+            期限
+            <input name="start" type="date"/>
+            ～
+            <input name="end" type="date"/>
+            ステータス
+            <select name="status">
+                <option value="">すべて</option>
+                <option value="1">未着手</option>
+                <option value="2">実行中</option>
+                <option value="3">ステイ中</option>
+                <option value="4">完了</option>
+            </select>
+            タスク内容
+            <textarea name="content"></textarea>
+            <input type="submit" value="絞込"/>
+        </form>
+    </div>
+    <div class="tasks">
+        <div class="titles">
+            <div class="content-title">タスク内容</div>
+            <div class="status-title">ステータス</div>
+            <div class="limit-date-title">タスク期限</div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
