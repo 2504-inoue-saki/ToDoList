@@ -51,22 +51,23 @@ body {
 .limit-date-title {
  }
 
-.task-icon {
+.tasks-icon {
     margin-bottom: 5px;
     margin-left: 40px;
     display: flex;
+    align-items: center;
 }
 
-.task-icon .content {
+.tasks-icon .content {
     width: 200px;
 }
 
-.task-icon .content pre {
+.tasks-icon .content pre {
     white-space: pre-wrap;
     word-wrap: break-word;
 }
 
-.task-icon .status {
+.tasks-icon .status {
     width: 150px;
 }
 
@@ -74,13 +75,13 @@ body {
     margin-left: 10px;
 }
 
-.task-icon .limit-date {
+.tasks-icon .limit-date {
 }
 
-.task-icon .edit-button {
+.tasks-icon .edit-button {
     margin-left: 10px;
 }
 
-.task-icon .delete-button {
+.tasks-icon .delete-button {
     margin-left: 10px;
 }
