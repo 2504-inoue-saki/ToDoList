@@ -8,11 +8,13 @@ import java.time.LocalDateTime;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @Entity
 @Table(name = "tasks")
 @Getter
 @Setter
+@EntityListeners(AuditingEntityListener.class)
 public class Tasks {
 
     @Id
@@ -30,10 +32,10 @@ public class Tasks {
     private LocalDateTime limitDate;
 
     @CreatedDate
-    @Column(name = "created_date", insertable = true, updatable = false)
+    @Column(updatable = false)
     private LocalDateTime createdDate;
 
     @LastModifiedDate
-    @Column(name = "updated_date", updatable = true)
+    @Column
     private LocalDateTime updatedDate;
 }

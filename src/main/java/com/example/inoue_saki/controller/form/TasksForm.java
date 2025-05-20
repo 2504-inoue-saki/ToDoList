@@ -1,6 +1,8 @@
 package com.example.inoue_saki.controller.form;
 
+import jakarta.validation.constraints.FutureOrPresent;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.validator.constraints.Length;
@@ -23,6 +25,8 @@ public class TasksForm {
     private short status;
 
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+    @NotNull(message = "期限を設定してください")
+    @FutureOrPresent(message = "無効な日付です")
     private LocalDate limitDate;
 
     private LocalDateTime createdDate;

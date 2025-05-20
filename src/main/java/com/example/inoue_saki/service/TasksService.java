@@ -91,6 +91,10 @@ public class TasksService {
      */
     public void saveTasks(TasksForm reqTasks) {
         Tasks saveTasks = setTasksEntity(reqTasks);
+        // 新規作成時のステータスは1（未着手）
+        if (saveTasks.getStatus() == 0) {
+            saveTasks.setStatus((short) 1);
+        }
         tasksRepository.save(saveTasks);
     }
 

@@ -82,7 +82,7 @@ public class TasksController {
     /*
      * タスク追加処理
      */
-    @PutMapping("/add")
+    @PostMapping("/add")
     public ModelAndView addTasks(@ModelAttribute("tasksForm") @Validated TasksForm tasksForm,
                                  BindingResult result,
                                  RedirectAttributes redirectAttributes) {
@@ -98,7 +98,7 @@ public class TasksController {
      */
     @GetMapping({"/edit/", "/edit/{id}"})
     public ModelAndView editTasks(@PathVariable(required = false) String id,
-                                 RedirectAttributes redirectAttributes){
+                                  RedirectAttributes redirectAttributes) {
         ModelAndView mav = new ModelAndView();
         TasksForm tasks = null;
 
@@ -109,7 +109,7 @@ public class TasksController {
         }
 
         if (tasks == null) {
-            redirectAttributes.addFlashAttribute("errorMessages","不正なパラメータです");
+            redirectAttributes.addFlashAttribute("errorMessages", "不正なパラメータです");
             return new ModelAndView("redirect:/");
         }
 
