@@ -46,7 +46,6 @@ public class TasksController {
         LocalDate now = LocalDate.now();
         // タスクを絞り込み取得
         List<TasksForm> tasksData = tasksService.findTasksByOrder(start, end, status, content);
-        System.out.println("tasksDataの中身: " + tasksData);
         // 画面遷移先を指定
         mav.setViewName("/top");
         // 現在日時データオブジェクトを保管
@@ -109,9 +108,7 @@ public class TasksController {
             }
             model.addAttribute("errorMessages", errorMessages);
 
-            /*
-             * エラーメッセージを設定（リダイレクトはしない）
-             */
+            // エラーメッセージを設定（リダイレクトはしない）
             return new ModelAndView("/new");
         }
         // 投稿をテーブルに格納
