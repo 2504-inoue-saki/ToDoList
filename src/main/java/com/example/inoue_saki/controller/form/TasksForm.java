@@ -48,8 +48,9 @@ public class TasksForm {
 
         // 文字列が全角スペースのみで構成されているか（1文字とは限らない）
         for (char c : content.toCharArray()) {
-            if (c != '　') { // 全角スペース以外の文字を見つけた場合
-                return true; // OK
+            // 全角スペース以外の文字を見つけた場合
+            if (c != '　') {
+                return true;
             }
         }
         // 全ての文字が全角スペースだった場合
