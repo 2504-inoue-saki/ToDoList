@@ -6,6 +6,7 @@ import com.example.inoue_saki.service.TasksService;
 import io.micrometer.common.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.util.CollectionUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -30,8 +31,17 @@ public class TasksController {
     public ModelAndView top(@RequestParam(name = "start", required = false) LocalDate start,
                             @RequestParam(name = "end", required = false) LocalDate end,
                             @RequestParam(name = "status", required = false) Short status,
-                            @RequestParam(name = "content", required = false) String content) {
+                            @RequestParam(name = "content", required = false) String content,
+                            Model model) {
         ModelAndView mav = new ModelAndView();
+
+        // 検索条件をModelに追加
+        // これをHTMLのフォームで利用する
+        model.addAttribute("searchStart", start);
+        model.addAttribute("searchEnd", end);
+        model.addAttribute("searchStatus", status);
+        model.addAttribute("searchContent", content);
+
         // 現在日時を取得
         LocalDate now = LocalDate.now();
         // タスクを絞り込み取得
@@ -86,19 +96,23 @@ public class TasksController {
      * タスク追加処理
      */
     @PostMapping("/add")
-    public ModelAndView addTasks(@ModelAttribute("tasksForm") @Validated TasksForm tasksForm,
+    public ModelAndView addTasks(@ModelAttribute("tasksForm")
+                                 @Validated TasksForm tasksForm,
                                  BindingResult result,
-                                 RedirectAttributes redirectAttributes) {
+                                 Model model) {
         // バリデーション処理
         List<String> errorMessages = new ArrayList<>();
         if (result.hasErrors()) {
+            // エラーメッセージをリストに追加
             for (FieldError error : result.getFieldErrors()) {
                 errorMessages.add(error.getDefaultMessage());
             }
+            model.addAttribute("errorMessages", errorMessages);
 
-            // エラーメッセージを設定してリダイレクト
-            redirectAttributes.addFlashAttribute("errorMessages", errorMessages);
-            return new ModelAndView("redirect:/new");
+            /*
+             * エラーメッセージを設定（リダイレクトはしない）
+             */
+            return new ModelAndView("/new");
         }
         // 投稿をテーブルに格納
         tasksService.saveTasks(tasksForm);
@@ -139,17 +153,19 @@ public class TasksController {
     public ModelAndView updateTasks(@PathVariable Integer id,
                                     @ModelAttribute("tasksForm") @Validated TasksForm tasksForm,
                                     BindingResult result,
-                                    RedirectAttributes redirectAttributes) {
+                                    Model model) {
         // バリデーション処理
         List<String> errorMessages = new ArrayList<>();
         if (result.hasErrors()) {
+            // エラーメッセージをリストに追加
             for (FieldError error : result.getFieldErrors()) {
                 errorMessages.add(error.getDefaultMessage());
             }
+            model.addAttribute("errorMessages", errorMessages);
 
-            // エラーメッセージを設定してリダイレクト
-            redirectAttributes.addFlashAttribute("errorMessages", errorMessages);
-            return new ModelAndView("redirect:/edit/{id}");
+            tasksForm.setId(id);
+            // エラーメッセージを設定（リダイレクトはしない）
+            return new ModelAndView("/edit");
         }
         // 投稿をテーブルに格納
         tasksForm.setId(id);

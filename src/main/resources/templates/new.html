@@ -10,7 +10,7 @@
   <h1>タスク追加</h1>
 </div>
 <div class="main-contents">
-  <div class="errorMessages" th:each="errorMessage : ${errorMessages}">
+  <div class="errorMessages" th:if="${errorMessages}" th:each="errorMessage : ${errorMessages}">
     <span th:text="${errorMessage}"></span>
   </div>
   <form action="/add" th:object="${tasksForm}" th:method="post">

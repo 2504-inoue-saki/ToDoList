@@ -16,7 +16,7 @@ public interface TasksRepository extends JpaRepository<Tasks, Integer> {
     /*
      * タスク期限、ステータス、タスク内容で絞り込み
      */
-    @Query("SELECT t FROM Tasks t WHERE t.limitDate BETWEEN :start AND :end AND t.status = :status AND t.content = :content ORDER BY t.limitDate ASC")
+    @Query
     List<Tasks> findByLimitDateBetweenAndStatusAndContentOrderByLimitDateAsc(
             @Param("start") LocalDateTime start,
             @Param("end") LocalDateTime end,
@@ -27,7 +27,7 @@ public interface TasksRepository extends JpaRepository<Tasks, Integer> {
     /*
      * タスク期限、ステータスで絞り込み
      */
-    @Query("SELECT t FROM Tasks t WHERE t.limitDate BETWEEN :start AND :end AND t.status = :status ORDER BY t.limitDate ASC")
+    @Query
     List<Tasks> findByLimitDateBetweenAndStatusOrderByLimitDateAsc(
             @Param("start") LocalDateTime start,
             @Param("end") LocalDateTime end,
@@ -37,7 +37,7 @@ public interface TasksRepository extends JpaRepository<Tasks, Integer> {
     /*
      * タスク期限、タスク内容で絞り込み
      */
-    @Query("SELECT t FROM Tasks t WHERE t.limitDate BETWEEN :start AND :end AND t.content = :content ORDER BY t.limitDate ASC")
+    @Query
     List<Tasks> findByLimitDateBetweenAndContentOrderByLimitDateAsc(
             @Param("start") LocalDateTime start,
             @Param("end") LocalDateTime end,
@@ -47,7 +47,7 @@ public interface TasksRepository extends JpaRepository<Tasks, Integer> {
     /*
      * タスク期限で絞り込み
      */
-    @Query("SELECT t FROM Tasks t WHERE t.limitDate BETWEEN :start AND :end ORDER BY t.limitDate ASC")
+    @Query
     List<Tasks> findByLimitDateBetweenOrderByLimitDateAsc(
             @Param("start") LocalDateTime start,
             @Param("end") LocalDateTime end

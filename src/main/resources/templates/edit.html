@@ -10,7 +10,7 @@
   <h1>タスク編集</h1>
 </div>
 <div class="main-contents">
-  <div class="errorMessages" th:each="errorMessage : ${errorMessages}">
+  <div class="errorMessages" th:if="${errorMessages}" th:each="errorMessage : ${errorMessages}">
     <span th:text="${errorMessage}"></span>
   </div>
   <form th:action="@{/update/{id}(id=${tasksForm.id})}" th:object="${tasksForm}" th:method="put">
