@@ -6,13 +6,16 @@ import com.example.inoue_saki.service.TasksService;
 import io.micrometer.common.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.CollectionUtils;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -86,6 +89,17 @@ public class TasksController {
     public ModelAndView addTasks(@ModelAttribute("tasksForm") @Validated TasksForm tasksForm,
                                  BindingResult result,
                                  RedirectAttributes redirectAttributes) {
+        // バリデーション処理
+        List<String> errorMessages = new ArrayList<>();
+        if (result.hasErrors()) {
+            for (FieldError error : result.getFieldErrors()) {
+                errorMessages.add(error.getDefaultMessage());
+            }
+
+            // エラーメッセージを設定してリダイレクト
+            redirectAttributes.addFlashAttribute("errorMessages", errorMessages);
+            return new ModelAndView("redirect:/new");
+        }
         // 投稿をテーブルに格納
         tasksService.saveTasks(tasksForm);
 
@@ -96,8 +110,8 @@ public class TasksController {
     /*
      * タスク編集画面表示処理
      */
-    @GetMapping({"/edit/", "/edit/{id}"})
-    public ModelAndView editTasks(@PathVariable(required = false) String id,
+    @GetMapping({"/edit/{id}"})
+    public ModelAndView editTasks(@PathVariable String id,
                                   RedirectAttributes redirectAttributes) {
         ModelAndView mav = new ModelAndView();
         TasksForm tasks = null;
@@ -116,5 +130,32 @@ public class TasksController {
         mav.addObject("tasksForm", tasks);
         mav.setViewName("/edit");
         return mav;
+    }
+
+    /*
+     * タスク編集処理
+     */
+    @PutMapping("/update/{id}")
+    public ModelAndView updateTasks(@PathVariable Integer id,
+                                    @ModelAttribute("tasksForm") @Validated TasksForm tasksForm,
+                                    BindingResult result,
+                                    RedirectAttributes redirectAttributes) {
+        // バリデーション処理
+        List<String> errorMessages = new ArrayList<>();
+        if (result.hasErrors()) {
+            for (FieldError error : result.getFieldErrors()) {
+                errorMessages.add(error.getDefaultMessage());
+            }
+
+            // エラーメッセージを設定してリダイレクト
+            redirectAttributes.addFlashAttribute("errorMessages", errorMessages);
+            return new ModelAndView("redirect:/edit/{id}");
+        }
+        // 投稿をテーブルに格納
+        tasksForm.setId(id);
+        tasksService.saveTasks(tasksForm);
+
+        // rootへリダイレクト
+        return new ModelAndView("redirect:/");
     }
 }
